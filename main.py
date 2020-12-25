@@ -22,29 +22,41 @@ def main():
     pygame.init()
     # get screen handler
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
     # pygame.display.update() #??????
     # set update time
     clock = pygame.time.Clock()
     finished = False
     new_ball(screen)
     pygame.display.update()
+
+    pygame.display.update()
+
     while not finished:
         clock.tick(FPS)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 click(event)
-        pygame.display.update()
         screen.fill(BLACK)
         draw_ball(screen)
         wall_detection()
-        #move ball
+        # move ball
         balls_x += balls_vx
         balls_y += balls_vy
-
+        score_msg(screen, SCORE)
     print(SCORE)
     pygame.quit()
+
+
+def score_msg(screen, score):
+    font = pygame.font.Font(None, 50)
+    output_string = ('YOUR SCORE: {}'.format(score))
+    text = font.render(output_string, False, (255, 0, 0))
+    screen.blit(text, (0, 0))
+    pygame.display.flip()
 
 
 def new_ball(screen):
